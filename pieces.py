@@ -4,10 +4,7 @@ from Chessboard import move_piece, location_pieces
 
 def outside_board(loc):
     # checks if given coordinates are inside the borders of the board
-    out = False
-    if 0 > loc[0] or 7 < loc[0] or 0 > loc[1] or 7 < loc[1]:
-        out = True
-    return out
+    return 0 > loc[0] or 7 < loc[0] or 0 > loc[1] or 7 < loc[1]
 
 
 def piece_in_loc(loc, loc_pieces):
@@ -127,8 +124,8 @@ def total_check(loc_king, color_king, loc_pieces, board):
     attackers = ['Knight']
     if not chec:
         knightmoves = [[-2, -1], [-1, -2], [-2, 1], [-1, 2], [2, -1], [1, -2], [2, 1], [1, 2]]
-        for i in range(len(knightmoves)):
-            new_loc = [loc_king[0] + knightmoves[i][0], loc_king[1] + knightmoves[i][1]]
+        for move in knightmoves:
+            new_loc = [loc_king[0] + move[0], loc_king[1] + move[1]]
             chec, loop = check(new_loc, loc_pieces, attackers, board, color_king)
             if not chec:
                 break
@@ -482,10 +479,10 @@ class Pawn(Piece):
                     if self.color != array(loc_pieces)[array(bool_list)].tolist()[0][2]:
                         list_moves.append(locs[i])
         # en passant
-        if loc[0] == 3 and self.color == 'w':
+        if loc[0] == 3 and self.color == 'w':  # TODO
             if not outside_board([loc[0], loc[1] + 1]) and not board[loc[0]][loc[1] + 1] == ' ':
-                    if 'Pawn' == type(board[loc[0]][loc[1] + 1]).__name__ and move_count == board[loc[0]][loc[1] + 1].moved:
-                        list_moves.append(['en_passant', 'right'])
+                if 'Pawn' == type(board[loc[0]][loc[1] + 1]).__name__ and move_count == board[loc[0]][loc[1] + 1].moved:
+                    list_moves.append(['en_passant', 'right'])
             if not outside_board([loc[0], loc[1] - 1]) and not board[loc[0]][loc[1] - 1] == ' ':
                 if 'Pawn' == type(board[loc[0]][loc[1] - 1]).__name__ and move_count == board[loc[0]][loc[1] - 1].moved:
                     list_moves.append(['en_passant', 'left'])

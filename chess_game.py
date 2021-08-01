@@ -4,6 +4,7 @@ from Chessboard import (make_board, move_piece, castling, en_passant, print_boar
 from random import randint
 from time import sleep
 
+
 def player_self(board, loc_pieces, loc_king, color, move_count):
     draw = False
     if color == 'w':

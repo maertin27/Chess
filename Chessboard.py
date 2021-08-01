@@ -97,39 +97,26 @@ def castling(board, direction, color, move_count):
     errormsg = 'Invalid input: enter the board, the direction of castling(left/right) and the color of castling(w/b)'
 
     if color == 'w':
-        if direction == 'right':
-            board[7][4] = ' '
-            board[7][5] = p.Rook([7, 5], 'w')
-            board[7][6] = p.King([7, 6], 'w')
-            board[7][7] = ' '
-            board[7][5].moved = move_count
-            board[7][6].moved = move_count
-        elif direction == 'left':
-            board[7][0] = ' '
-            board[7][2] = p.Rook([7, 2], 'w')
-            board[7][3] = p.King([7, 3], 'w')
-            board[7][4] = ' '
-            board[7][2].moved = move_count
-            board[7][3].moved = move_count
-        else:
-            print(errormsg)
+        x = 7
     elif color == 'b':
-        if direction == 'right':
-            board[0][4] = ' '
-            board[0][5] = p.Rook([0, 5], 'b')
-            board[0][6] = p.King([0, 6], 'b')
-            board[0][7] = ' '
-            board[0][5].moved = move_count
-            board[0][6].moved = move_count
-        elif direction == 'left':
-            board[0][0] = ' '
-            board[0][2] = p.Rook([0, 2], 'b')
-            board[0][3] = p.King([0, 3], 'b')
-            board[0][4] = ' '
-            board[0][2].moved = move_count
-            board[0][3].moved = move_count
-        else:
-            print(errormsg)
+        x = 0
+    else:
+        print(errormsg)
+
+    if direction == 'right':
+        board[x][4] = ' '
+        board[x][5] = p.Rook([x, 5], 'w')
+        board[x][6] = p.King([x, 6], 'w')
+        board[x][7] = ' '
+        board[x][5].moved = move_count
+        board[x][6].moved = move_count
+    elif direction == 'left':
+        board[x][0] = ' '
+        board[x][2] = p.Rook([x, 2], 'w')
+        board[x][3] = p.King([x, 3], 'w')
+        board[x][4] = ' '
+        board[x][2].moved = move_count
+        board[x][3].moved = move_count
     else:
         print(errormsg)
 
