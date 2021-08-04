@@ -1,5 +1,5 @@
 from numpy import array
-from Chessboard import move_piece, location_pieces
+from chess_board import move_piece, location_pieces
 
 
 def outside_board(loc):
@@ -10,14 +10,13 @@ def outside_board(loc):
 def piece_in_loc(loc, loc_pieces):
     # checks if a piece is located at given coordinates
     bool_list = []
-    for i in range(len(loc_pieces)):
-        bool_list.append(loc == [loc_pieces[i][0], loc_pieces[i][1]])
+    for loc_piece in loc_pieces:
+        bool_list.append(loc == [loc_piece[0], loc_piece[1]])
 
     return bool_list
 
 
 def valid_move(new_loc, loc_pieces, color, list_moves):
-    #
     loop = True
     if outside_board(new_loc):
         loop = False
@@ -43,8 +42,8 @@ def check(new_loc, loc_pieces, attackers, board, color_king):
             loop = False
             if color_king != array(loc_pieces)[array(bool_list)].tolist()[0][2]:
                 b_list = []
-                for i in range(len(attackers)):
-                    b_list.append(type(board[new_loc[0]][new_loc[1]]).__name__ == attackers[i])
+                for attacker in attackers:
+                    b_list.append(type(board[new_loc[0]][new_loc[1]]).__name__ == attacker)
                     if any(b_list):
                         chec = True
     return chec, loop
@@ -137,8 +136,8 @@ def total_check(loc_king, color_king, loc_pieces, board):
         else:
             direction = 1
         locs = [[loc_king[0]+direction, loc_king[1]-1], [loc_king[0]+direction, loc_king[1]+1]]
-        for i in range(len(locs)):
-            chec, loop = check(locs[i], loc_pieces, attackers, board, color_king)
+        for loc in locs:
+            chec, loop = check(loc, loc_pieces, attackers, board, color_king)
             if not chec:
                 break
 

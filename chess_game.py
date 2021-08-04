@@ -1,6 +1,6 @@
 import pieces
-from Chessboard import (make_board, move_piece, castling, en_passant, print_board, coord, dictionary,
-                        location_pieces, location_king, generate_all_moves, score_function)
+from chess_board import (make_board, move_piece, castling, en_passant, print_board, coord, dictionary,
+                         location_pieces, location_king, generate_all_moves, score_function)
 from random import randint
 from time import sleep
 
@@ -17,8 +17,8 @@ def player_self(board, loc_pieces, loc_king, color, move_count):
         while not moved:
             fro = coord(input(f'{colour}\'s turn, which piece do you want to move? \n> '))
             to = coord(input('Where or how do you want to move it? \n> '))
-            for i in range(len(all_moves)):
-                if fro in all_moves[i] and to in all_moves[i][1]:
+            for i, all_move in enumerate(all_moves):
+                if fro in all_move and to in all_move:
                     board, move_count = move_piece(board, fro, to, move_count)
                     print_board(board)
                     moved = True

@@ -189,10 +189,10 @@ def generate_all_moves(board, loc_pieces, color, loc_king, move_count):
     # makes a list of all possible moves dor all pieces of one color by using implemented .moves
     # syntax all_moves: [[loc_pieces,[move,move,move,...]],[loc_pieces,[move,move,move,...]],...]
     all_moves = []
-    for i in range(len(loc_pieces)):
-        loc0 = loc_pieces[i][0]
-        loc1 = loc_pieces[i][1]
-        if loc_pieces[i][2] == color:
+    for loc_piece in loc_pieces:
+        loc0 = loc_piece[0]
+        loc1 = loc_piece[1]
+        if loc_piece[2] == color:
             x = [[loc0, loc1], board[loc0][loc1].moves(board, loc_pieces, loc_king, move_count)]
             if x[1]:
                 all_moves.append(x)
@@ -204,40 +204,41 @@ def score_function(board, loc_pieces):
     # positive score is in favor of white, negative in favor for black.
     score_black = 0
     score_white = 0
-    for i in range(len(loc_pieces)):
+    for loc_piece in loc_pieces:
         while True:
-            if 'Pawn' == type(board[loc_pieces[i][0]][loc_pieces[i][1]]).__name__:
-                if loc_pieces[i][2] == 'w':
+            typ = type(board[loc_piece[0]][loc_piece[1]]).__name__
+            if 'Pawn' == typ:
+                if loc_piece[2] == 'w':
                     score_white += 1
                 else:
                     score_black += 1
                 break
-            if 'Knight' == type(board[loc_pieces[i][0]][loc_pieces[i][1]]).__name__:
-                if loc_pieces[i][2] == 'w':
+            if 'Knight' == typ:
+                if loc_piece[2] == 'w':
                     score_white += 3
                 else:
                     score_black += 3
                 break
-            if 'Bishop' == type(board[loc_pieces[i][0]][loc_pieces[i][1]]).__name__:
-                if loc_pieces[i][2] == 'w':
+            if 'Bishop' == typ:
+                if loc_piece[2] == 'w':
                     score_white += 3
                 else:
                     score_black += 3
                 break
-            if 'Rook' == type(board[loc_pieces[i][0]][loc_pieces[i][1]]).__name__:
-                if loc_pieces[i][2] == 'w':
+            if 'Rook' == typ:
+                if loc_piece[2] == 'w':
                     score_white += 5
                 else:
                     score_black += 5
                 break
-            if 'Queen' == type(board[loc_pieces[i][0]][loc_pieces[i][1]]).__name__:
-                if loc_pieces[i][2] == 'w':
+            if 'Queen' == typ:
+                if loc_piece[2] == 'w':
                     score_white += 9
                 else:
                     score_black += 9
                 break
-            if 'King'== type(board[loc_pieces[i][0]][loc_pieces[i][1]]).__name__:
-                if loc_pieces[i][2] == 'w':
+            if 'King' == typ:
+                if loc_piece[2] == 'w':
                     score_white += 100
                 else:
                     score_black += 100
