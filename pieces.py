@@ -145,8 +145,8 @@ def total_check(loc_king, color_king, loc_pieces, board):
     attackers = ['King']
     if not chec:
         kingmoves = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, -1]]
-        for i in range(len(kingmoves)):
-            new_loc = [loc_king[0] + kingmoves[i][0], loc_king[1] + kingmoves[i][1]]
+        for kingmove in kingmoves:
+            new_loc = [loc_king[0] + kingmove[0], loc_king[1] + kingmove[1]]
             chec, loop = check(new_loc, loc_pieces, attackers, board, color_king)
             if not chec:
                 break
@@ -156,12 +156,12 @@ def total_check(loc_king, color_king, loc_pieces, board):
 
 def remove_moves_check(loc, color, list_moves, board, loc_pieces, loc_king):
     list_moves2 = []
-    for i in range(len(list_moves)):
-        board2, count = move_piece(board, loc, list_moves[i], 0)
+    for move in list_moves:
+        board2, count = move_piece(board, loc, move, 0)
         loc_pieces2 = location_pieces(board2)
         chec = total_check(loc_king, color, loc_pieces2, board2)
         if not chec:
-            list_moves2.append(list_moves[i])
+            list_moves2.append(move)
     return list_moves2
 
 
