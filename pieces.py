@@ -190,15 +190,15 @@ class King(Piece):
         list_moves = []
         king_moves = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
         # generating possible moves
-        for i in range(len(king_moves)):
-            new_loc = [self.loc[0] + king_moves[i][0], self.loc[1] + king_moves[i][1]]
+        for king_move in king_moves:
+            new_loc = [self.loc[0] + king_move[0], self.loc[1] + king_move[1]]
             list_moves, loop = valid_move(new_loc, loc_pieces, self.color, list_moves)
         # removing moves that lead to checks
         list_moves2 = []
-        for i in range(len(list_moves)):
-            chec = total_check(list_moves[i], self.color, loc_pieces, board)
+        for move in list_moves:
+            chec = total_check(move, self.color, loc_pieces, board)
             if not chec:
-                list_moves2.append(list_moves[i])
+                list_moves2.append(move)
         # castling
         if self.moved == 0:
             if self.color == 'w':
@@ -423,8 +423,8 @@ class Knight(Piece):
         list_moves = []
         knightmoves = [[-2, -1], [-1, -2], [-2, 1], [-1, 2], [2, -1], [1, -2], [2, 1], [1, 2]]
         loc = self.loc
-        for i in range(len(knightmoves)):
-            new_loc = [loc[0] + knightmoves[i][0], loc[1] + knightmoves[i][1]]
+        for knightmove in knightmoves:
+            new_loc = [loc[0] + knightmove[0], loc[1] + knightmove[1]]
             list_moves, loop = valid_move(new_loc, loc_pieces, self.color, list_moves)
         # remove moves that lead tot check
         list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_pieces, loc_king)
@@ -451,7 +451,7 @@ class Pawn(Piece):
         moves = 0
         loc = self.loc
         while moves < 2:
-            new_loc = [loc[0] + direction, loc[1]]
+            new_loc = [self.loc[0] + direction, loc[1]]
 
             if outside_board(new_loc):
                 moves = 2
@@ -469,14 +469,14 @@ class Pawn(Piece):
         # takes moves
         loc = self.loc
         locs = [[loc[0]+direction, loc[1]-1], [loc[0]+direction, loc[1]+1]]
-        for i in range(len(locs)):
-            if outside_board(locs[i]):
+        for locs_i in locs:
+            if outside_board(locs_i):
                 pass
             else:
-                bool_list = piece_in_loc(locs[i], loc_pieces)
+                bool_list = piece_in_loc(locs_i, loc_pieces)
                 if any(bool_list):
                     if self.color != array(loc_pieces)[array(bool_list)].tolist()[0][2]:
-                        list_moves.append(locs[i])
+                        list_moves.append(locs_i)
         # en passant
         if loc[0] == 3 and self.color == 'w':  # TODO
             if not outside_board([loc[0], loc[1] + 1]) and not board[loc[0]][loc[1] + 1] == ' ':
