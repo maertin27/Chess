@@ -9,7 +9,8 @@ loc_pieces = location_pieces(board)
 loc_king = location_king(board, loc_pieces, 'b')
 print_board(board)
 print(score_function(board, loc_pieces))
-game_start('random', 'random')
+for i in range(50):
+    game_start('random', 'random')
 
 
 

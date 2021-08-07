@@ -113,7 +113,7 @@ def total_check(loc_king, color_king, loc_pieces, board):
     return chec
 
 
-def remove_moves_check(loc, color, list_moves, board, loc_pieces, loc_king):
+def remove_moves_check(loc, color, list_moves, board, loc_king):
     list_moves2 = []
     for move in list_moves:
         board2, count = move_piece(board, loc, move, 0)
@@ -209,7 +209,7 @@ class Queen(Piece):
                 list_moves, loop = valid_move(new_loc, loc_pieces, self.color, list_moves)
                 loc = new_loc
         # remove moves that lead tot check
-        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_pieces, loc_king)
+        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_king)
         return list_moves
 
 
@@ -235,7 +235,7 @@ class Rook(Piece):
                 list_moves, loop = valid_move(new_loc, loc_pieces, self.color, list_moves)
                 loc = new_loc
         # remove moves that lead tot check
-        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_pieces, loc_king)
+        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_king)
         return list_moves
 
 
@@ -261,7 +261,7 @@ class Bishop(Piece):
                 list_moves, loop = valid_move(new_loc, loc_pieces, self.color, list_moves)
                 loc = new_loc
         # remove moves that lead tot check
-        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_pieces, loc_king)
+        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_king)
         return list_moves
 
 
@@ -283,7 +283,7 @@ class Knight(Piece):
             new_loc = [loc[0] + knightmove[0], loc[1] + knightmove[1]]
             list_moves, loop = valid_move(new_loc, loc_pieces, self.color, list_moves)
         # remove moves that lead tot check
-        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_pieces, loc_king)
+        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_king)
         return list_moves
 
 
@@ -310,7 +310,7 @@ class Pawn(Piece):
             bool_list = piece_in_loc(new_loc, loc_pieces)
             if not any(bool_list):
                 list_moves.append(new_loc)
-                new_loc = new_loc = [new_loc[0] + direction, new_loc[1]]
+                new_loc = [new_loc[0] + direction, new_loc[1]]
                 if self.moved == 0 and not any(piece_in_loc(new_loc, loc_pieces)):
                     list_moves.append(new_loc)
         # takes moves
@@ -326,13 +326,11 @@ class Pawn(Piece):
                         list_moves.append(locs_i)
         # en passant
         if (loc[0] == 3 and self.color == 'w') or (loc[0] == 4 and self.color == 'b'):
-            if not outside_board([loc[0], loc[1] + 1]) and not board[loc[0]][loc[1] + 1] == ' ':
-                if 'Pawn' == type(board[loc[0]][loc[1] + 1]).__name__ and move_count == board[loc[0]][loc[1] + 1].moved:
-                    list_moves.append(['en_passant', 'right'])
-            if not outside_board([loc[0], loc[1] - 1]) and not board[loc[0]][loc[1] - 1] == ' ':
-                if 'Pawn' == type(board[loc[0]][loc[1] - 1]).__name__ and move_count == board[loc[0]][loc[1] - 1].moved:
-                    list_moves.append(['en_passant', 'left'])
+            for x, y in [[1, 'right'], [-1, 'left']]:
+                if not outside_board([loc[0], loc[1] + x]) and not board[loc[0]][loc[1] + x] == ' ':
+                    if isinstance(board[loc[0]][loc[1] + x], Pawn) and move_count == board[loc[0]][loc[1] + x].moved:
+                        list_moves.append(['en_passant', y])
         # remove moves that lead to check
-        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_pieces, loc_king)
+        list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_king)
 
         return list_moves
