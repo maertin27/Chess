@@ -325,22 +325,14 @@ class Pawn(Piece):
                     if self.color != array(loc_pieces)[array(bool_list)].tolist()[0][2]:
                         list_moves.append(locs_i)
         # en passant
-        if loc[0] == 3 and self.color == 'w':  # TODO
+        if (loc[0] == 3 and self.color == 'w') or (loc[0] == 4 and self.color == 'b'):
             if not outside_board([loc[0], loc[1] + 1]) and not board[loc[0]][loc[1] + 1] == ' ':
                 if 'Pawn' == type(board[loc[0]][loc[1] + 1]).__name__ and move_count == board[loc[0]][loc[1] + 1].moved:
                     list_moves.append(['en_passant', 'right'])
             if not outside_board([loc[0], loc[1] - 1]) and not board[loc[0]][loc[1] - 1] == ' ':
                 if 'Pawn' == type(board[loc[0]][loc[1] - 1]).__name__ and move_count == board[loc[0]][loc[1] - 1].moved:
                     list_moves.append(['en_passant', 'left'])
-        elif loc[0] == 4 and self.color == 'b':
-            if not outside_board([loc[0], loc[1] + 1]) and not board[loc[0]][loc[1] + 1] == ' ':
-                if 'Pawn' == type(board[loc[0]][loc[1] + 1]).__name__ and move_count == board[loc[0]][loc[1] + 1].moved:
-                    list_moves.append(['en_passant', 'right'])
-            if not outside_board([loc[0], loc[1] - 1]) and not board[loc[0]][loc[1] - 1] == ' ':
-                if 'Pawn' == type(board[loc[0]][loc[1] - 1]).__name__ and move_count == board[loc[0]][loc[1] - 1].moved:
-                    list_moves.append(['en_passant', 'left'])
-
-        # remove moves that lead tot check
+        # remove moves that lead to check
         list_moves = remove_moves_check(self.loc, self.color, list_moves, board, loc_pieces, loc_king)
 
         return list_moves

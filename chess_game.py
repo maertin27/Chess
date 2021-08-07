@@ -40,8 +40,8 @@ def player_random(board, loc_pieces, loc_king, color, move_count):
         to = all_moves[r1][1][r2]
         board, move_count = move_piece(board, fro, to, move_count)
         #sleep(1)
-        print_board(board)
-        #print(move_count)
+        #print_board(board)
+        print(move_count)
     else:
         draw = True
     return board, move_count, draw
