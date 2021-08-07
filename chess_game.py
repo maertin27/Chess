@@ -18,7 +18,7 @@ def player_self(board, loc_pieces, loc_king, color, move_count):
             fro = coord(input(f'{colour}\'s turn, which piece do you want to move? \n> '))
             to = coord(input('Where or how do you want to move it? \n> '))
             for i, all_move in enumerate(all_moves):
-                if fro in all_move and to in all_move:
+                if fro in all_move and to in all_move[1]:
                     board, move_count = move_piece(board, fro, to, move_count)
                     print_board(board)
                     moved = True
@@ -39,16 +39,16 @@ def player_random(board, loc_pieces, loc_king, color, move_count):
         fro = all_moves[r1][0]
         to = all_moves[r1][1][r2]
         board, move_count = move_piece(board, fro, to, move_count)
-        sleep(1)
+        #sleep(1)
         print_board(board)
-        # print(move_count)
+        #print(move_count)
     else:
         draw = True
     return board, move_count, draw
 
 
 def game_start(player_white, player_black):
-    # possible players: self, random, minimax
+    # possible players: self, random, minim ax
     board, move_count = make_board()
     print_board(board)
 
