@@ -181,7 +181,7 @@ def location_king(board, loc_pieces, color):
 
 def generate_all_moves(board, loc_pieces, color, loc_king, move_count):
     # makes a list of all possible moves dor all pieces of one color by using implemented .moves
-    # syntax all_moves: [[loc_pieces,[move,move,move,...]],[loc_pieces,[move,move,move,...]],...]
+    # syntax all_moves: [[loc_piece,[move,move,move,...]],[loc_piece,[move,move,move,...]],...]
     all_moves = []
     for loc_piece in loc_pieces:
         loc0 = loc_piece[0]

@@ -39,9 +39,9 @@ def player_random(board, loc_pieces, loc_king, color, move_count):
         fro = all_moves[r1][0]
         to = all_moves[r1][1][r2]
         board, move_count = move_piece(board, fro, to, move_count)
-        #sleep(1)
-        #print_board(board)
-        print(move_count)
+        sleep(1)
+        print_board(board)
+        #print(move_count)
     else:
         draw = True
     return board, move_count, draw
