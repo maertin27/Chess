@@ -40,7 +40,7 @@ def generate_tree(board, depth):
     return tree
 
 
-def generate_children(node):
+def generate_children(node): #TODO fix movecount
     # search moves to right position
     mvs = [node.move]
     n = node.parent

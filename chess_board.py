@@ -2,6 +2,7 @@ import pieces as p
 import copy
 
 
+
 dictionary = {
     # making a dictionary used in function coord
     'a': 0,
