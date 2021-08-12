@@ -25,17 +25,17 @@ class Node:
         self.children.append(obj)
 
 
-def generate_tree(board, depth):
-    color = 'w'
-    move_count = 0
+def generate_tree(board, move_count, depth):
+    color = 'b' if (move_count % 2) else 'w'
     loc_pieces = location_pieces(board)
     loc_king = location_king(board, loc_pieces, color)
     all_moves = generate_all_moves(board, loc_pieces, color, loc_king, move_count)
+    move_count += 1
 
     tree = Tree(board)
     for moves in all_moves:
         for move in moves[1]:
-            tree.add_node(Node([moves[0], move, 1], tree))
+            tree.add_node(Node([moves[0], move, move_count], tree))
 
     loopings(depth, tree)
     return tree
@@ -55,15 +55,13 @@ def generate_children(node): #TODO fix movecount
     for mv in mvs:
         board = move_piece(board, mv[0], mv[1], mv[2])[0]
     move_count = mvs[-1][2]
-    if move_count % 2:
-        color = 'b'
-    else:
-        color = 'w'
+    color = 'b' if (move_count % 2) else 'w'
     # generate all moves from the position
     loc_pieces = location_pieces(board)
     loc_king = location_king(board, loc_pieces, color)
     if loc_king:
         all_moves = generate_all_moves(board, loc_pieces, color, loc_king, move_count)
+        move_count += 1
         for moves in all_moves:
             for move in moves[1]:
                 node.add_node(Node([moves[0], move, 1], node))

@@ -5,13 +5,15 @@ from chess_game import game_start
 import minimax as m
 import time
 
-board, count_moves = make_board()
+board, move_count = make_board()
 print_board(board)
 
 
 start_time = time.time()
-tree = m.generate_tree(board, 3)
+tree = m.generate_tree(board, move_count, 3)
 print("--- %s seconds ---" % (time.time() - start_time))
+
+print(tree.children[0].children[0].children[0].move)
 
 
 

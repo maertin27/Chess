@@ -52,7 +52,7 @@ def move_piece(board, fro, to, move_count):
         board2 = en_passant(board2, fro[1], to[1], color, move_count)
     elif (color == 'w' and fro[0] == 1) or (color == 'b' and fro[0] == 7) \
             and isinstance(board2[fro[0]][fro[1]], p.Pawn):
-        board2[to[0]][to[1]] = p.Queen([to[0], to[1]], board2[fro[0]][fro[1]].color)
+        board2[to[0]][to[1]] = p.Queen([to[0], to[1]], color)
         board2[to[0]][to[1]].moved = move_count
         board2[fro[0]][fro[1]] = ' '
     else:
