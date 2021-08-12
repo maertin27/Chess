@@ -67,11 +67,7 @@ def generate_children(node): #TODO fix movecount
             for move in moves[1]:
                 node.add_node(Node([moves[0], move, 1], node))
     else:
-        if color == 'w':
-            node.score = -100
-        else:
-            node.score = 100
-
+        node.score = -100 if color == 'w' else 100
     return node
 
 
