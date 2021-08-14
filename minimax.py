@@ -78,7 +78,8 @@ def loopings(depth, root):
         if depth - 1:
             loopings(depth - 1, child)
 
-def minmax(node, depth,maximizing_player):
+
+def minmax(node, depth, maximizing_player):
     if depth == 0 or node.children == []:
         return node.score
     if maximizing_player:
@@ -89,5 +90,5 @@ def minmax(node, depth,maximizing_player):
         value = 1000
         for child in node.children:
             value = min(value, minmax(child, depth-1, True))
-    return(value)
-
+    node.score = value
+    return value

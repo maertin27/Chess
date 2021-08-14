@@ -2,7 +2,9 @@ import pieces
 from chess_board import (make_board, move_piece, castling, en_passant, print_board, coord, dictionary,
                          location_pieces, location_king, generate_all_moves, score_function)
 from random import randint
+import minimax as m
 from time import sleep
+from random import sample
 
 
 def player_self(board, loc_pieces, loc_king, color, move_count):
@@ -29,7 +31,6 @@ def player_self(board, loc_pieces, loc_king, color, move_count):
         draw = True
     return board, move_count, draw
 
-
 def player_random(board, loc_pieces, loc_king, color, move_count):
     all_moves = generate_all_moves(board, loc_pieces, color, loc_king, move_count)
     draw = False
@@ -41,10 +42,28 @@ def player_random(board, loc_pieces, loc_king, color, move_count):
         board, move_count = move_piece(board, fro, to, move_count)
         sleep(1)
         print_board(board)
-        #print(move_count)
+        print(move_count)
     else:
         draw = True
     return board, move_count, draw
+
+def player_minimax(board, loc_pieces, loc_king, color, move_count):
+    depth = 2
+    tree = m.generate_tree(board, move_count, depth)
+    best_score = m.minmax(tree, depth, True if color == 'w' else False)
+
+    for i, child in sample(list(enumerate(tree.children)), len(tree.children)):
+        if child.score == best_score:
+            fro, to, z = tree.children[i].move
+            break
+    board, move_count = move_piece(board, fro, to, move_count)
+    sleep(1)
+    print_board(board)
+    print(move_count)
+    draw = False
+    return board, move_count, draw
+
+
 
 
 def game_start(player_white, player_black):
@@ -69,6 +88,8 @@ def game_start(player_white, player_black):
 
         if player_white == 'random':
             board, move_count, draw = player_random(board, loc_pieces, loc_king_white, color, move_count)
+        if player_white == 'minimax':
+            board, move_count, draw = player_minimax(board, loc_pieces, loc_king_white, color, move_count)
         if draw:
             break
         # black's turn
@@ -83,6 +104,8 @@ def game_start(player_white, player_black):
 
         if player_black == 'random':
             board, move_count, draw = player_random(board, loc_pieces, loc_king_black, color, move_count)
+        if player_black == 'minimax':
+            board, move_count, draw = player_minimax(board, loc_pieces, loc_king_white, color, move_count)
         if draw:
             break
 

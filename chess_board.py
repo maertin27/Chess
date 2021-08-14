@@ -28,10 +28,10 @@ def make_board():
     # Also starts a counter for the amount of played moves
     board = array([array([p.Rook([0, 0], 'b'), p.Knight([0, 1], 'b'), p.Bishop([0, 2], 'b'), p.Queen([0, 3], 'b'), p.King([0, 4], 'b'), p.Bishop([0, 5], 'b'), p.Knight([0, 6], 'b'), p.Rook([0, 7], 'b')]),
              array([p.Pawn([1, 0], 'b'), p.Pawn([1, 1], 'b'), p.Pawn([1, 2], 'b'), p.Pawn([1, 3], 'b'), p.Pawn([1, 4], 'b'), p.Pawn([1, 5], 'b'), p.Pawn([1, 6], 'b'), p.Pawn([1, 7], 'b')]),
-             array([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']),
-             array([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']),
-             array([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']),
-             array([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']),
+             array(['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']),
+             array(['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']),
+             array(['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']),
+             array(['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']),
              array([p.Pawn([6, 0], 'w'), p.Pawn([6, 1], 'w'), p.Pawn([6, 2], 'w'), p.Pawn([6, 3], 'w'), p.Pawn([6, 4], 'w'), p.Pawn([6, 5], 'w'), p.Pawn([6, 6], 'w'), p.Pawn([6, 7], 'w')]),
              array([p.Rook([7, 0], 'w'), p.Knight([7, 1], 'w'), p.Bishop([7, 2], 'w'), p.Queen([7, 3], 'w'), p.King([7, 4], 'w'), p.Bishop([7, 5], 'w'), p.Knight([7, 6], 'w'), p.Rook([7, 7], 'w')])])
     move_count = 0
@@ -164,18 +164,36 @@ def score_function(board, loc_pieces):
         while True:
             if 'Pawn' == typ:
                 score += 1*sign
+                if loc_piece in [[4, 3], [4, 4], [3, 3], [3, 4]]:
+                    score += 0.15 * sign
                 break
             if 'Knight' == typ:
                 score += 3*sign
+                if loc_piece[0] in [2, 6]:
+                    score += 0.2 * sign
+                elif loc_piece[0] in [3, 4]:
+                    score += 0.4 * sign
                 break
             if 'Bishop' == typ:
                 score += 3*sign
+                if loc_piece[0] in [2, 6]:
+                    score += 0.2 * sign
+                elif loc_piece[0] in [3, 4]:
+                    score += 0.4 * sign
                 break
             if 'Rook' == typ:
                 score += 5*sign
+                if loc_piece[0] in [2, 6]:
+                    score += 0.2 * sign
+                elif loc_piece[0] in [3, 4]:
+                    score += 0.4 * sign
                 break
             if 'Queen' == typ:
                 score += 9*sign
+                if loc_piece[0] in [2, 6]:
+                    score += 0.3 * sign
+                elif loc_piece[0] in [3, 4]:
+                    score += 0.4 * sign
                 break
             if 'King'== typ:
                 score += 100*sign
