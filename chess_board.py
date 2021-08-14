@@ -159,19 +159,29 @@ def score_function(board, loc_pieces):
     score = 0
 
     for loc_piece in loc_pieces:
+        typ = type(board[loc_piece[0]][loc_piece[1]]).__name__
+        sign = 1 if loc_piece[2] == 'w' else -1
         while True:
-            typ = type(board[loc_piece[0]][loc_piece[1]]).__name__
-            sign = 1 if loc_piece[2] == 'w' else -1
-
-            score += 1 * sign if 'Pawn' == typ else 0
-            score += 3 * sign if 'Knight' == typ else 0
-            score += 3 * sign if 'Bishop' == typ else 0
-            score += 5 * sign if 'Rook' == typ else 0
-            score += 9 * sign if 'Queen' == typ else 0
-            score += 100 * sign if 'King' == typ else 0
+            if 'Pawn' == typ:
+                score += 1*sign
+                break
+            if 'Knight' == typ:
+                score += 3*sign
+                break
+            if 'Bishop' == typ:
+                score += 3*sign
+                break
+            if 'Rook' == typ:
+                score += 5*sign
+                break
+            if 'Queen' == typ:
+                score += 9*sign
+                break
+            if 'King'== typ:
+                score += 100*sign
+                break
 
     return score
-
 
 
 
