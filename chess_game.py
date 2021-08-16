@@ -68,7 +68,7 @@ def player_minimax(board, loc_pieces, loc_king, color, move_count):
 
 def game_start(player_white, player_black):
     # possible players: self, random, minim ax
-    board, move_count = make_board()
+    board, move_count, root = make_board()
     print_board(board)
 
     loc_king_white = True

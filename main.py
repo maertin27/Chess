@@ -4,10 +4,14 @@ from chess_board import (make_board, move_piece, castling, en_passant, print_boa
 from chess_game import game_start
 import minimax as m
 import time
+from tkinter import *
+from chess_board import make_board
+from PIL import ImageTk,Image
+from gui import *
 
-for i in range(10):
-    game_start('minimax', 'random')
-
+#board, move_count, root = make_board()
+#print_board2(board, root)
+game_start('random','random')
 
 
 

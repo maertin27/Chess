@@ -1,6 +1,7 @@
 import pieces as p
 import copy
 from numpy import array
+import tkinter as tk
 
 dictionary = {
     # making a dictionary used in function coord
@@ -26,16 +27,17 @@ dictionary = {
 def make_board():
     # Makes a list of the initial board with the corresponding objects as pieces and empty strings as empty spaces
     # Also starts a counter for the amount of played moves
+    root = tk.Tk()
     board = array([array([p.Rook([0, 0], 'b'), p.Knight([0, 1], 'b'), p.Bishop([0, 2], 'b'), p.Queen([0, 3], 'b'), p.King([0, 4], 'b'), p.Bishop([0, 5], 'b'), p.Knight([0, 6], 'b'), p.Rook([0, 7], 'b')]),
              array([p.Pawn([1, 0], 'b'), p.Pawn([1, 1], 'b'), p.Pawn([1, 2], 'b'), p.Pawn([1, 3], 'b'), p.Pawn([1, 4], 'b'), p.Pawn([1, 5], 'b'), p.Pawn([1, 6], 'b'), p.Pawn([1, 7], 'b')]),
-             array(['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']),
-             array(['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']),
-             array(['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']),
-             array(['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']),
+             array(['', '', '', '', '', '', '', '']),
+             array(['', '', '', '', '', '', '', '']),
+             array(['', '', '', '', '', '', '', '']),
+             array(['', '', '', '', '', '', '', '']),
              array([p.Pawn([6, 0], 'w'), p.Pawn([6, 1], 'w'), p.Pawn([6, 2], 'w'), p.Pawn([6, 3], 'w'), p.Pawn([6, 4], 'w'), p.Pawn([6, 5], 'w'), p.Pawn([6, 6], 'w'), p.Pawn([6, 7], 'w')]),
              array([p.Rook([7, 0], 'w'), p.Knight([7, 1], 'w'), p.Bishop([7, 2], 'w'), p.Queen([7, 3], 'w'), p.King([7, 4], 'w'), p.Bishop([7, 5], 'w'), p.Knight([7, 6], 'w'), p.Rook([7, 7], 'w')])])
     move_count = 0
-    return board, move_count
+    return board, move_count, root
 
 
 def move_piece(board, fro, to, move_count):
@@ -54,12 +56,12 @@ def move_piece(board, fro, to, move_count):
             and isinstance(board2[fro[0]][fro[1]], p.Pawn):
         board2[to[0]][to[1]] = p.Queen([to[0], to[1]], color)
         board2[to[0]][to[1]].moved = move_count
-        board2[fro[0]][fro[1]] = ' '
+        board2[fro[0]][fro[1]] = ''
     else:
         board2[to[0]][to[1]] = board2[fro[0]][fro[1]]
         board2[to[0]][to[1]].loc = [to[0], to[1]]
         board2[to[0]][to[1]].moved = move_count
-        board2[fro[0]][fro[1]] = ' '
+        board2[fro[0]][fro[1]] = ''
 
     return board2, move_count
 
@@ -69,9 +71,9 @@ def print_board(board):
     numbers = [8, 7, 6, 5, 4, 3, 2, 1]
     for row in range(8):
         print('')
-        print(numbers[row], end=' ')
+        print(numbers[row], end='')
         for column in range(8):
-            print(board[row][column], end=' ')
+            print(board[row][column], end='')
     print('')
 
     for i in [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']:
@@ -89,17 +91,17 @@ def castling(board, direction, color, move_count):
     # function to castle depending on inputs: direction(l/r) and color (w/b)
     x = 7 if color == 'w' else 0
     if direction == 'right':
-        board[x][4] = ' '
+        board[x][4] = ''
         board[x][5] = p.Rook([x, 5], color)
         board[x][6] = p.King([x, 6], color)
-        board[x][7] = ' '
+        board[x][7] = ''
         board[x][5].moved = move_count
         board[x][6].moved = move_count
     else:
-        board[x][0] = ' '
+        board[x][0] = ''
         board[x][2] = p.Rook([x, 2], color)
         board[x][3] = p.King([x, 3], color)
-        board[x][4] = ' '
+        board[x][4] = ''
         board[x][2].moved = move_count
         board[x][3].moved = move_count
     return board
@@ -110,8 +112,8 @@ def en_passant(board, column, direction, color, move_count):
     x = column
     y, z = [3, 2] if color == 'w' else [4, 5]
     s = -1 if direction == 'left' else 1
-    board[y][x] = ' '
-    board[y][x + s] = ' '
+    board[y][x] = ''
+    board[y][x + s] = ''
     board[z][x + s] = p.Pawn([z, x + s], color)
     board[z][x + s].moved = move_count
     return board
