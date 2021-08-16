@@ -10,7 +10,7 @@ from PIL import ImageTk,Image
 from gui import *
 
 
-game_start('self', 'minimax')
+game_start('random', 'random')
 
 
 
