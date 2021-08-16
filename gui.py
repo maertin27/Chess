@@ -2,9 +2,13 @@ import tkinter as tk
 import tkinter as tk
 from chess_board import *
 from PIL import *
+from pieces import *
 
-def print_board2(board, root):
-    img = tk.PhotoImage(file="chess_pieces\Chess_wKing.png")
+def print_board2(board,root):
+    imgs = []
+    for color in ['w', 'b']:
+        for piece in ['King', 'Queen', 'Rook', 'Bishop', 'Knight', 'Pawn']:
+            imgs.append(tk.PhotoImage(file=f"chess_pieces\Chess_{color}{piece}.png"))
     for i, row in enumerate(board):
         for j, file in enumerate(row):
             frame = tk.Frame(master=root,
@@ -18,7 +22,12 @@ def print_board2(board, root):
             else:
                 color = 'sienna4'
             canvas = tk.Canvas(frame, bg=color, width=9, height=4)
-            canvas.grid(ipadx=60,ipady=60)
+            canvas.grid(ipadx=60, ipady=60)
             if file:
-                canvas.create_image(65,60,anchor='center', image=file.img)
-    root.mainloop()
+                counter = 0
+                for color in ['w', 'b']:
+                    for piece in [King, Queen, Rook, Bishop, Knight, Pawn]:
+                        if file.color == color and isinstance(file,piece):
+                            canvas.create_image(65,60,anchor='center', image=imgs[counter])
+                        counter += 1
+    root.update()

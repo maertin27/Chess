@@ -9,9 +9,8 @@ from chess_board import make_board
 from PIL import ImageTk,Image
 from gui import *
 
-#board, move_count, root = make_board()
-#print_board2(board, root)
-game_start('random','random')
+
+game_start('self', 'minimax')
 
 
 

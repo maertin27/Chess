@@ -5,9 +5,10 @@ from random import randint
 import minimax as m
 from time import sleep
 from random import sample
+from gui import print_board2
 
 
-def player_self(board, loc_pieces, loc_king, color, move_count):
+def player_self(board, loc_pieces, loc_king, color, move_count,root):
     draw = False
     if color == 'w':
         colour = 'White'
@@ -22,7 +23,7 @@ def player_self(board, loc_pieces, loc_king, color, move_count):
             for i, all_move in enumerate(all_moves):
                 if fro in all_move and to in all_move[1]:
                     board, move_count = move_piece(board, fro, to, move_count)
-                    print_board(board)
+                    print_board2(board, root)
                     moved = True
                     break
                 if i == len(all_moves) - 1:
@@ -31,7 +32,7 @@ def player_self(board, loc_pieces, loc_king, color, move_count):
         draw = True
     return board, move_count, draw
 
-def player_random(board, loc_pieces, loc_king, color, move_count):
+def player_random(board, loc_pieces, loc_king, color, move_count,root):
     all_moves = generate_all_moves(board, loc_pieces, color, loc_king, move_count)
     draw = False
     if all_moves:
@@ -41,14 +42,14 @@ def player_random(board, loc_pieces, loc_king, color, move_count):
         to = all_moves[r1][1][r2]
         board, move_count = move_piece(board, fro, to, move_count)
         sleep(1)
-        print_board(board)
+        print_board2(board,root)
         print(move_count)
     else:
         draw = True
     return board, move_count, draw
 
-def player_minimax(board, loc_pieces, loc_king, color, move_count):
-    depth = 2
+def player_minimax(board, loc_pieces, loc_king, color, move_count,root):
+    depth = 3
     tree = m.generate_tree(board, move_count, depth)
     best_score = m.minmax(tree, depth, True if color == 'w' else False)
 
@@ -58,7 +59,7 @@ def player_minimax(board, loc_pieces, loc_king, color, move_count):
             break
     board, move_count = move_piece(board, fro, to, move_count)
     sleep(1)
-    print_board(board)
+    print_board2(board, root)
     print(move_count)
     draw = False
     return board, move_count, draw
@@ -69,7 +70,7 @@ def player_minimax(board, loc_pieces, loc_king, color, move_count):
 def game_start(player_white, player_black):
     # possible players: self, random, minim ax
     board, move_count, root = make_board()
-    print_board(board)
+    print_board2(board, root)
 
     loc_king_white = True
     loc_king_black = True
@@ -84,12 +85,12 @@ def game_start(player_white, player_black):
         if not loc_king_white:
             break
         if player_white == 'self':
-            board, move_count, draw = player_self(board, loc_pieces, loc_king_white, color, move_count)
+            board, move_count, draw = player_self(board, loc_pieces, loc_king_white, color, move_count,root)
 
         if player_white == 'random':
-            board, move_count, draw = player_random(board, loc_pieces, loc_king_white, color, move_count)
+            board, move_count, draw = player_random(board, loc_pieces, loc_king_white, color, move_count,root)
         if player_white == 'minimax':
-            board, move_count, draw = player_minimax(board, loc_pieces, loc_king_white, color, move_count)
+            board, move_count, draw = player_minimax(board, loc_pieces, loc_king_white, color, move_count,root)
         if draw:
             break
         # black's turn
@@ -100,12 +101,12 @@ def game_start(player_white, player_black):
             break
 
         if player_black == 'self':
-            board, move_count, draw = player_self(board, loc_pieces, loc_king_black, color, move_count)
+            board, move_count, draw = player_self(board, loc_pieces, loc_king_black, color, move_count,root)
 
         if player_black == 'random':
-            board, move_count, draw = player_random(board, loc_pieces, loc_king_black, color, move_count)
+            board, move_count, draw = player_random(board, loc_pieces, loc_king_black, color, move_count,root)
         if player_black == 'minimax':
-            board, move_count, draw = player_minimax(board, loc_pieces, loc_king_white, color, move_count)
+            board, move_count, draw = player_minimax(board, loc_pieces, loc_king_white, color, move_count,root)
         if draw:
             break
 

@@ -52,7 +52,7 @@ def move_piece(board, fro, to, move_count):
         board2 = castling(board2, to[1], color, move_count)
     elif to[0] == 'en_passant':
         board2 = en_passant(board2, fro[1], to[1], color, move_count)
-    elif (color == 'w' and fro[0] == 1) or (color == 'b' and fro[0] == 7) \
+    elif ((color == 'w' and fro[0] == 1) or (color == 'b' and fro[0] == 7)) \
             and isinstance(board2[fro[0]][fro[1]], p.Pawn):
         board2[to[0]][to[1]] = p.Queen([to[0], to[1]], color)
         board2[to[0]][to[1]].moved = move_count
@@ -155,7 +155,7 @@ def generate_all_moves(board, loc_pieces, color, loc_king, move_count):
     return all_moves
 
 
-def score_function(board, loc_pieces):
+def score_function(board, loc_pieces): #TODO if check extra points
     # calculates score for board assigning classic amount of points according to the pieces.
     # positive score is in favor of white, negative in favor for black.
     score = 0

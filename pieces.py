@@ -129,9 +129,6 @@ class Piece:
 
 
 class King(Piece):
-    def __init__(self, loc, color):
-        Piece.__init__(self, loc, color)
-        self.img = tk.PhotoImage(file="chess_pieces\Chess_wKing.png" if self.color == 'w' else "chess_pieces\Chess_bKing.png")
 
     def __str__(self):
         return '\u265A' if self.color == 'w' else '\u2654'
@@ -186,9 +183,6 @@ class King(Piece):
 
 
 class Queen(Piece):
-    def __init__(self, loc, color):
-        Piece.__init__(self, loc, color)
-        self.img = tk.PhotoImage(file="chess_pieces\Chess_wQueen.png" if self.color == 'w' else "chess_pieces\Chess_bQueen.png")
 
     def __str__(self):
         return '\u265B' if self.color == 'w' else '\u2655'
@@ -213,9 +207,6 @@ class Queen(Piece):
 
 
 class Rook(Piece):
-    def __init__(self, loc, color):
-        Piece.__init__(self, loc, color)
-        self.img = tk.PhotoImage(file="chess_pieces\Chess_wRook.png" if self.color == 'w' else "chess_pieces\Chess_bRook.png")
 
     def __str__(self):
         return '\u265C' if self.color == 'w' else '\u2656'
@@ -240,9 +231,6 @@ class Rook(Piece):
 
 
 class Bishop(Piece):
-    def __init__(self, loc, color):
-        Piece.__init__(self, loc, color)
-        self.img = tk.PhotoImage(file="chess_pieces\Chess_wBishop.png" if self.color == 'w' else "chess_pieces\Chess_bBishop.png")
 
     def __str__(self):
             return '\u265D' if self.color == 'w' else '\u2657'
@@ -267,9 +255,6 @@ class Bishop(Piece):
 
 
 class Knight(Piece):
-    def __init__(self, loc, color):
-        Piece.__init__(self, loc, color)
-        self.img = tk.PhotoImage(file="chess_pieces\Chess_wKnight.png" if self.color == 'w' else "chess_pieces\Chess_bKnight.png")
 
     def __str__(self):
         return '\u265E' if self.color == 'w' else '\u2658'
@@ -291,9 +276,6 @@ class Knight(Piece):
 
 
 class Pawn(Piece):
-    def __init__(self, loc, color):
-        Piece.__init__(self, loc, color)
-        self.img = tk.PhotoImage(file="chess_pieces\Chess_wPawn.png" if self.color == 'w' else "chess_pieces\Chess_bPawn.png")
 
     def __str__(self):
         return '\u265F' if self.color == 'w' else '\u2659'
